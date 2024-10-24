@@ -1,7 +1,3 @@
-For your README file, you’ll want to focus on making it informative, clear, and engaging. Here’s a structure to help guide you in generating content for your GitHub project. Since this is for your suicidal thought detection app, I’ve tailored the outline to fit this project:
-
----
-
 # LifePulse AI (Suicidal Thought Detection App)
 
 ## Table of Contents
@@ -64,7 +60,3 @@ The model was evaluated using accuracy, precision, recall, and F1-score to ensur
 - **Model Accuracy**: Explore additional layers or transfer learning techniques to improve accuracy.
 - **Mental Health Classification**: Extend the model to detect other mental health issues, such as anxiety or depression.
 - **Real-time Detection**: Implement a real-time API for immediate text analysis and feedback.
-
----
-
-This template should give you a solid foundation for your README. You can adjust the sections based on your needs or include more details as you see fit!
