@@ -9,7 +9,6 @@
 - [Data](#data)
 - [Performance](#performance)
 - [Future Improvements](#future-improvements)
-- [License](#license)
 
 ## Project Overview
 The **Suicidal Thought Detection App** is an AI-powered tool designed to identify suicidal thoughts based on text data. The app was trained using a dataset of suicidal and non-suicidal posts from Reddit. It uses natural language processing and a GRU-based model to differentiate between posts that may express suicidal intent and those that do not. This tool aims to support mental health professionals in early detection and intervention.
