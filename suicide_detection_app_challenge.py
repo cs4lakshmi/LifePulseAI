@@ -11,6 +11,7 @@ Original file is located at
 !python3 -m ipykernel install --user
 !pip install nejattext
 !pip install tensorflow
+!pip install anvil-uplink
 
 from google.colab import drive
 import numpy as np
@@ -33,6 +34,7 @@ import pickle
 import warnings
 warnings.filterwarnings('ignore')
 from sklearn.feature_extraction.text import TfidfVectorizer
+import anvil.server
 
 drive.mount("/content/drive/")
 data_directory = "/content/drive/MyDrive/Suicide_Detection/"
@@ -153,12 +155,6 @@ for layer in model.layers:
 r=model.fit(train_text_pad,train_output,validation_data=(test_text_pad,test_output),
             epochs=20,batch_size=256,callbacks=[reducelr])
 
-import joblib
-from google.colab import files
-
-model_content = joblib.dump(model, "gru.skmodel")[0]
-files.download(model_content)
-
 # Predict probabilities and convert to class labels
 test_predictions = (model.predict(test_text_pad) > 0.5).astype("int32")
 train_predictions = (model.predict(train_text_pad) > 0.5).astype("int32")
@@ -170,3 +166,21 @@ print(classification_report(test_output, test_predictions, target_names=lbl_targ
 # Generate classification report for training data
 print('TRAINING DATA CLASSIFICATION REPORT \n\n')
 print(classification_report(train_output, train_predictions, target_names=lbl_target.inverse_transform([0, 1])))
+
+# Integration with Anvil UI framework.
+anvil.server.connect("server_PVRCYGHEOMM7RIUA4UV6GGTF-JW3PKSYRCFMZFJBN")
+
+@anvil.server.callable
+def predict_suicide(input_text):
+  test_text_seq_2 = tokenizer.texts_to_sequences([input_text])  # Ensure you pass the whole text
+  test_text_pad_2 = pad_sequences(test_text_seq_2, maxlen=50)
+
+  # Make the prediction
+  test_predictions_2 = (model.predict(test_text_pad_2) > 0.5).astype("int32")
+
+  if test_predictions_2[0] == 0:
+    return "Not Suicide"
+  elif test_predictions_2[0] == 1:
+    return "Suicide"
+
+anvil.server.wait_forever()
